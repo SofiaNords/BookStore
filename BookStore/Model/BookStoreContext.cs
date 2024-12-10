@@ -33,7 +33,7 @@ public partial class BookStoreContext : DbContext
         var connectionString = new SqlConnectionStringBuilder()
         {
             ServerSPN = "localhost",
-            InitialCatalog = "CityDB",
+            InitialCatalog = "BookStore",
             IntegratedSecurity = true,
             TrustServerCertificate = true
         }.ToString();
