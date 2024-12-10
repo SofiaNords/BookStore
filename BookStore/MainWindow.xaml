@@ -5,8 +5,100 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookStore"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="MainWindow" Height="800" Width="1200">
+    <Grid ShowGridLines="False">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="8*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
 
+        <StackPanel Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Margin="10,20,20,0">
+            <StackPanel Grid.Row="0"
+                        Orientation="Horizontal">
+                <Label Content="Select a Store:"
+                       FontSize="20"
+                       Margin="10,10,0,10"/>
+                <ComboBox AutomationProperties.Name="Store Selection"
+                          Text="Select Store"
+                          Width="200"
+                          Height="30"
+                          Margin="10,10,10,10">
+                </ComboBox>
+                <Button Width="150"
+                        Height="30"
+                        Margin="10,10,10,10"
+                        Content="Reduce stock"/>
+                <Button Width="150"
+                        Height="30"
+                        Margin="10,10,10,10"
+                        Content="Increase stock"/>
+                <Button Width="150"
+                        Height="30"
+                        Margin="10,10,10,10"
+                        Content="Add new books"/>   
+            </StackPanel>
+            
+        </StackPanel>
+
+
+        <StackPanel Grid.Column="0"
+                    Grid.Row="1"
+                    Margin="10,0,10,10"
+                    VerticalAlignment="Bottom">
+            <StackPanel HorizontalAlignment="Left"
+                        Orientation="Horizontal">
+                <TextBlock Text="In stock"
+                           TextDecorations="Underline"
+                           Width="200"
+                           VerticalAlignment="Bottom"
+                           FontSize="36"
+                           Margin="10,10,10,10"/>
+                <StackPanel VerticalAlignment="Bottom"
+                            HorizontalAlignment="Left">
+                    <Label Content="Filter"
+                           Margin="10,10,10,0"/>
+                    <TextBox Width="200"
+                             Height="30"
+                             Margin="10,0,10,10"/>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Grid.Column="1"
+                    Grid.Row="1"
+                    Margin="10,0,10,10"
+                    VerticalAlignment="Bottom">
+            <StackPanel 
+                        HorizontalAlignment="Left"
+                        Orientation="Horizontal">
+                <TextBlock Text="Out of stock"
+                           TextDecorations="Underline"
+                           VerticalAlignment="Bottom"
+                           FontSize="36"
+                           Margin="10,10,10,10"/>
+                <StackPanel VerticalAlignment="Bottom"
+                            HorizontalAlignment="Left">
+                    <Label Content="Filter"
+                           Margin="10,10,10,0"/>
+                    <TextBox Width="200"
+                             Height="30"
+                             Margin="10,0,10,10"/>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+
+        <DataGrid Grid.Row="2"
+                  Grid.Column="0"
+                  Margin="10,10,10,10"/>
+        <DataGrid Grid.Row="2"
+                  Grid.Column="1"
+                  Margin="10,10,10,10"/>
     </Grid>
 </Window>
