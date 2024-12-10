@@ -35,7 +35,8 @@
                           Height="30"
                           Margin="10,10,10,10"
                           ItemsSource="{Binding Stores}"
-                          DisplayMemberPath="Name">
+                          DisplayMemberPath="Name"
+                          SelectedItem="{Binding SelectedStore, UpdateSourceTrigger=PropertyChanged}">
                 </ComboBox>
                 <Button Width="150"
                         Height="30"

@@ -4,7 +4,22 @@ namespace BookStore.ViewModel
 {
     class MainWindowViewModel : ViewModelBase
     {
+        private Store _selectedStore;
+
         public ObservableCollection<Store> Stores { get; set; }
+
+        public Store SelectedStore
+        {
+            get { return _selectedStore; }
+            set 
+            { 
+                if (_selectedStore != value)
+                {
+                    _selectedStore = value;
+                    RaisePropertyChanged(nameof(SelectedStore));
+                }    
+            }
+        }
 
         public MainWindowViewModel()
         {
@@ -25,6 +40,11 @@ namespace BookStore.ViewModel
                     Stores.Add(store);
                 }
             }
+        }
+
+        private void LoadBooks()
+        {
+            
         }
 
     }
