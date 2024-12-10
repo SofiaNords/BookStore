@@ -26,7 +26,6 @@ namespace BookStore.ViewModel
                 }    
             }
         }
-
      
         public MainWindowViewModel()
         {
@@ -50,42 +49,6 @@ namespace BookStore.ViewModel
                 }
             }
         }
-
-        //private void LoadBooks()
-        //{
-        //    if (SelectedStore != null)
-        //    {
-        //        using (var _bookStoreContext = new BookStoreContext())
-        //        {
-        //            var booksInStock = _bookStoreContext.StockBalances
-        //                .Where(sb => sb.StoreId == SelectedStore.Id && sb.Amount > 0)
-        //                .Include(sb => sb.Isbn13Navigation.Author)
-        //                .Include(sb => sb.Isbn13Navigation.Genre)
-        //                .Select(sb => sb.Isbn13Navigation)
-        //                .ToList();
-
-        //            var booksOutOfStock = _bookStoreContext.Books
-        //                .Include(b => b.StockBalances)
-        //                .Where(book => !_bookStoreContext.StockBalances
-        //                    .Any(ls => ls.StoreId == SelectedStore.Id && ls.Isbn13 == book.Isbn13))
-        //                .ToList();
-
-        //            BooksInStock.Clear();
-        //            BooksOutOfStock.Clear();
-
-        //            foreach (var book in booksInStock)
-        //            {
-        //                BooksInStock.Add(book);
-        //            }
-
-        //            foreach (var book in booksOutOfStock)
-        //            {
-        //                BooksOutOfStock.Add(book);
-        //            }
-        //        }
-        //    }
-        //}
-
 
         private void LoadBooks()
         {
