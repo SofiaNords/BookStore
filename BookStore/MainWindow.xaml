@@ -41,15 +41,15 @@
                 <Button Width="150"
                         Height="30"
                         Margin="10,10,10,10"
-                        Content="Reduce stock"/>
-                <Button Width="150"
-                        Height="30"
-                        Margin="10,10,10,10"
                         Content="Increase stock"/>
                 <Button Width="150"
                         Height="30"
                         Margin="10,10,10,10"
-                        Content="Add new books"/>   
+                        Content="Reduce stock"/>
+                <Button Width="150"
+                        Height="30"
+                        Margin="10,10,10,10"
+                        Content="Add new books"/>
             </StackPanel>
             
         </StackPanel>
