@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using BookStore.Command;
+using BookStore.Dialogs;
+using Microsoft.EntityFrameworkCore;
+using System.CodeDom;
 using System.Collections.ObjectModel;
 
 namespace BookStore.ViewModel
@@ -12,6 +15,8 @@ namespace BookStore.ViewModel
         public ObservableCollection<StockBalance> BooksInStock { get; set; }
 
         public ObservableCollection<Book> BooksOutOfStock { get; set; }
+
+        public DelegateCommand OpenIncreaseDialogCommand { get; }
 
         public Store SelectedStore
         {
@@ -32,6 +37,7 @@ namespace BookStore.ViewModel
             Stores = new ObservableCollection<Store>();
             BooksInStock = new ObservableCollection<StockBalance>();
             BooksOutOfStock = new ObservableCollection<Book>();
+            OpenIncreaseDialogCommand = new DelegateCommand(OpenIncreaseStockDialog);
 
             LoadStores();
 
@@ -86,6 +92,15 @@ namespace BookStore.ViewModel
                     }
                 }
             }
+        }
+
+        private void OpenIncreaseStockDialog(object parameter)
+        {
+            var dialog = new IncreaseStockDialog();
+
+            dialog.DataContext = this;
+
+            dialog.ShowDialog();
         }
     }
 }
