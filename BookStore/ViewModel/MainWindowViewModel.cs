@@ -66,6 +66,8 @@ namespace BookStore.ViewModel
 
                     var booksOutOfStock = _bookStoreContext.Books
                         .Include(b => b.StockBalances)
+                        .Include(b => b.Author)
+                        .Include(b => b.Genre)
                         .Where(b => !b.StockBalances.Any(sb => sb.StoreId == SelectedStore.Id && sb.Amount > 0))
                         .ToList();
 
