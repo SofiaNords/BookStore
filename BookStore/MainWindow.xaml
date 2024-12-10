@@ -108,11 +108,11 @@
                   AutoGenerateColumns="False"
                   IsReadOnly="True">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Title" Binding="{Binding Title}"/>
-                <DataGridTextColumn Header="ISBN13" Binding="{Binding Isbn13}"/>
-                <DataGridTextColumn Header="Author" Binding="{Binding Author.FullName}"/>
-                <DataGridTextColumn Header="Genre" Binding="{Binding Genre.Name}"/>
-                <DataGridTextColumn Header="Amount" Binding="{Binding  }"/>
+                <DataGridTextColumn Header="Title" Binding="{Binding Isbn13Navigation.Title}"/>
+                <DataGridTextColumn Header="ISBN13" Binding="{Binding Isbn13Navigation.Isbn13}"/>
+                <DataGridTextColumn Header="Author" Binding="{Binding Isbn13Navigation.Author.FullName}"/>
+                <DataGridTextColumn Header="Genre" Binding="{Binding Isbn13Navigation.Genre.Name}"/>
+                <DataGridTextColumn Header="Amount" Binding="{Binding Amount}"/>
             </DataGrid.Columns>
         </DataGrid>
         <DataGrid Grid.Row="2"
@@ -126,7 +126,6 @@
                 <DataGridTextColumn Header="ISBN13" Binding="{Binding Isbn13}"/>
                 <DataGridTextColumn Header="Author" Binding="{Binding Author.FullName}"/>
                 <DataGridTextColumn Header="Genre" Binding="{Binding Genre.Name}"/>
-                <DataGridTextColumn Header="Amount" Binding="{Binding }"/>
             </DataGrid.Columns>
 
         </DataGrid>

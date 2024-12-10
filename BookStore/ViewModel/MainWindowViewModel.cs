@@ -9,7 +9,7 @@ namespace BookStore.ViewModel
 
         public ObservableCollection<Store> Stores { get; set; }
 
-        public ObservableCollection<Book> BooksInStock { get; set; }
+        public ObservableCollection<StockBalance> BooksInStock { get; set; }
 
         public ObservableCollection<Book> BooksOutOfStock { get; set; }
 
@@ -30,7 +30,7 @@ namespace BookStore.ViewModel
         public MainWindowViewModel()
         {
             Stores = new ObservableCollection<Store>();
-            BooksInStock = new ObservableCollection<Book>();
+            BooksInStock = new ObservableCollection<StockBalance>();
             BooksOutOfStock = new ObservableCollection<Book>();
 
             LoadStores();
@@ -56,19 +56,20 @@ namespace BookStore.ViewModel
             {
                 using (var _bookStoreContext = new BookStoreContext())
                 {
-                    var booksInStock = _bookStoreContext.Books
-                        .Include(b => b.StockBalances)
+                    var allBooks = _bookStoreContext.Books
                         .Include(b => b.Author)
                         .Include(b => b.Genre)
-                        .Where(b => b.StockBalances.Any(sb => sb.StoreId == SelectedStore.Id && sb.Amount > 0))
                         .ToList();
 
+                    var booksInStock = _bookStoreContext.StockBalances
+                        .Include(sb => sb.Isbn13Navigation.Author)
+                        .Include(sb => sb.Isbn13Navigation.Genre)
+                        .Where(sb => sb.StoreId == SelectedStore.Id && sb.Amount > 0)
+                        .ToList();
 
-                    var booksOutOfStock = _bookStoreContext.Books
-                        .Include(b => b.StockBalances)
-                        .Include(b => b.Author)
-                        .Include(b => b.Genre)
-                        .Where(b => !b.StockBalances.Any(sb => sb.StoreId == SelectedStore.Id && sb.Amount > 0))
+                    var booksOutOfStock = allBooks
+                        .Where(b => !_bookStoreContext.StockBalances
+                            .Any(sb => sb.StoreId == SelectedStore.Id && sb.Isbn13 == b.Isbn13 && sb.Amount > 0))
                         .ToList();
 
                     BooksInStock.Clear();
