@@ -99,14 +99,13 @@
                   Margin="10,10,10,10"
                   ItemsSource="{Binding BooksInStock}"
                   SelectedItem="{Binding SelectedBook, UpdateSourceTrigger=PropertyChanged}"
-                  AutoGenerateColumns="False"
-                  IsReadOnly="True">
+                  AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Title" Binding="{Binding Isbn13Navigation.Title}"/>
-                <DataGridTextColumn Header="ISBN13" Binding="{Binding Isbn13Navigation.Isbn13}"/>
-                <DataGridTextColumn Header="Author" Binding="{Binding Isbn13Navigation.Author.FullName}"/>
-                <DataGridTextColumn Header="Genre" Binding="{Binding Isbn13Navigation.Genre.Name}"/>
-                <DataGridTextColumn Header="Amount" Binding="{Binding Amount}"/>
+                <DataGridTextColumn Header="Title" Binding="{Binding Isbn13Navigation.Title}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="ISBN13" Binding="{Binding Isbn13Navigation.Isbn13}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Author" Binding="{Binding Isbn13Navigation.Author.FullName}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Genre" Binding="{Binding Isbn13Navigation.Genre.Name}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Amount" Binding="{Binding Amount}" IsReadOnly="False"/>
             </DataGrid.Columns>
         </DataGrid>
         <DataGrid Grid.Row="2"
@@ -114,14 +113,13 @@
                   Margin="10,10,10,10"
                   ItemsSource="{Binding BooksOutOfStock}"
                   SelectedItem="{Binding SelectedBook, UpdateSourceTrigger=PropertyChanged}"
-                  AutoGenerateColumns="False"
-                  IsReadOnly="True">
+                  AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Title" Binding="{Binding Isbn13Navigation.Title}"/>
-                <DataGridTextColumn Header="ISBN13" Binding="{Binding Isbn13Navigation.Isbn13}"/>
-                <DataGridTextColumn Header="Author" Binding="{Binding Isbn13Navigation.Author.FullName}"/>
-                <DataGridTextColumn Header="Genre" Binding="{Binding Isbn13Navigation.Genre.Name}"/>
-                <DataGridTextColumn Header="Amount" Binding="{Binding Amount}"/>
+                <DataGridTextColumn Header="Title" Binding="{Binding Isbn13Navigation.Title}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="ISBN13" Binding="{Binding Isbn13Navigation.Isbn13}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Author" Binding="{Binding Isbn13Navigation.Author.FullName}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Genre" Binding="{Binding Isbn13Navigation.Genre.Name}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Amount" Binding="{Binding Amount}" IsReadOnly="False"/>
             </DataGrid.Columns>
 
         </DataGrid>
