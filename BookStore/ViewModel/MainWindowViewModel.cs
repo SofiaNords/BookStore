@@ -1,5 +1,4 @@
 ﻿using BookStore.Command;
-using BookStore.Dialogs;
 using Microsoft.EntityFrameworkCore;
 using System.CodeDom;
 using System.Collections.ObjectModel;
@@ -18,8 +17,6 @@ namespace BookStore.ViewModel
 
         public ObservableCollection<StockBalance> BooksOutOfStock { get; set; }
 
-        public DelegateCommand OpenIncreaseDialogCommand { get; }
-
         public Store SelectedStore
         {
             get { return _selectedStore; }
@@ -36,10 +33,7 @@ namespace BookStore.ViewModel
      
         public MainWindowViewModel()
         {
-            OpenIncreaseDialogCommand = new DelegateCommand(OpenIncreaseStockDialog);
-
             LoadStores();
-
         }
 
         private void LoadStores()
@@ -91,13 +85,5 @@ namespace BookStore.ViewModel
             RaisePropertyChanged(nameof(BooksOutOfStock));
         }
 
-        private void OpenIncreaseStockDialog(object parameter)
-        {
-            var dialog = new IncreaseStockDialog();
-
-            dialog.DataContext = this;
-
-            dialog.ShowDialog();
-        }
     }
 }
