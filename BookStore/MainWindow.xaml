@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookStore.ViewModel" 
         mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=UI:MainWindowViewModel, IsDesignTimeCreatable=True}"
         Title="MainWindow" Height="800" Width="1200">
     <Window.DataContext>
         <local:MainWindowViewModel/>
@@ -41,7 +42,8 @@
                 <Button Width="150"
                         Height="30"
                         Margin="10,10,10,10"
-                        Content="Increase stock"/>
+                        Content="Increase stock"
+                        Command="{Binding OpenIncreaseDialogCommand}"/>
                 <Button Width="150"
                         Height="30"
                         Margin="10,10,10,10"
@@ -105,6 +107,7 @@
                   Grid.Column="0"
                   Margin="10,10,10,10"
                   ItemsSource="{Binding BooksInStock}"
+                  SelectedItem="{Binding SelectedBook, UpdateSourceTrigger=PropertyChanged}"
                   AutoGenerateColumns="False"
                   IsReadOnly="True">
             <DataGrid.Columns>
@@ -119,13 +122,14 @@
                   Grid.Column="1"
                   Margin="10,10,10,10"
                   ItemsSource="{Binding BooksOutOfStock}"
+                  SelectedItem="{Binding SelectedBook, UpdateSourceTrigger=PropertyChanged}"
                   AutoGenerateColumns="False"
                   IsReadOnly="True">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Title" Binding="{Binding Title}"/>
-                <DataGridTextColumn Header="ISBN13" Binding="{Binding Isbn13}"/>
-                <DataGridTextColumn Header="Author" Binding="{Binding Author.FullName}"/>
-                <DataGridTextColumn Header="Genre" Binding="{Binding Genre.Name}"/>
+                <DataGridTextColumn Header="Title" Binding="{Binding Isbn13Navigation.Title}"/>
+                <DataGridTextColumn Header="ISBN13" Binding="{Binding Isbn13Navigation.Isbn13}"/>
+                <DataGridTextColumn Header="Author" Binding="{Binding Isbn13Navigation.Author.FullName}"/>
+                <DataGridTextColumn Header="Genre" Binding="{Binding Isbn13Navigation.Genre.Name}"/>
             </DataGrid.Columns>
 
         </DataGrid>
