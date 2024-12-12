@@ -34,7 +34,6 @@ namespace BookStore.ViewModel
      
         public MainWindowViewModel()
         {
-            Stores = new ObservableCollection<Store>();
             BooksInStock = new ObservableCollection<StockBalance>();
             BooksOutOfStock = new ObservableCollection<Book>();
             OpenIncreaseDialogCommand = new DelegateCommand(OpenIncreaseStockDialog);
