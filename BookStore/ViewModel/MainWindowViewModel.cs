@@ -12,9 +12,11 @@ namespace BookStore.ViewModel
 
         public ObservableCollection<Store> Stores { get; set; }
 
+        public ObservableCollection<StockBalance> AllBooks { get; set; }
+
         public ObservableCollection<StockBalance> BooksInStock { get; set; }
 
-        public ObservableCollection<Book> BooksOutOfStock { get; set; }
+        public ObservableCollection<StockBalance> BooksOutOfStock { get; set; }
 
         public DelegateCommand OpenIncreaseDialogCommand { get; }
 
@@ -26,7 +28,7 @@ namespace BookStore.ViewModel
                 if (_selectedStore != value)
                 {
                     _selectedStore = value;
-                    RaisePropertyChanged(nameof(SelectedStore));
+                    RaisePropertyChanged();
                     LoadBooks();
                 }    
             }
@@ -34,8 +36,6 @@ namespace BookStore.ViewModel
      
         public MainWindowViewModel()
         {
-            BooksInStock = new ObservableCollection<StockBalance>();
-            BooksOutOfStock = new ObservableCollection<Book>();
             OpenIncreaseDialogCommand = new DelegateCommand(OpenIncreaseStockDialog);
 
             LoadStores();
@@ -51,42 +51,44 @@ namespace BookStore.ViewModel
             );
         }
 
+
         private void LoadBooks()
         {
-            if (SelectedStore != null)
+            if (SelectedStore == null)
             {
-                using (var _bookStoreContext = new BookStoreContext())
-                {
-                    var allBooks = _bookStoreContext.Books
-                        .Include(b => b.Author)
-                        .Include(b => b.Genre)
-                        .ToList();
-
-                    var booksInStock = _bookStoreContext.StockBalances
-                        .Include(sb => sb.Isbn13Navigation.Author)
-                        .Include(sb => sb.Isbn13Navigation.Genre)
-                        .Where(sb => sb.StoreId == SelectedStore.Id && sb.Amount > 0)
-                        .ToList();
-
-                    var booksOutOfStock = allBooks
-                        .Where(b => !_bookStoreContext.StockBalances
-                            .Any(sb => sb.StoreId == SelectedStore.Id && sb.Isbn13 == b.Isbn13 && sb.Amount > 0))
-                        .ToList();
-
-                    BooksInStock.Clear();
-                    BooksOutOfStock.Clear();
-
-                    foreach (var book in booksInStock)
-                    {
-                        BooksInStock.Add(book);
-                    }
-
-                    foreach (var book in booksOutOfStock)
-                    {
-                        BooksOutOfStock.Add(book);
-                    }
-                }
+                return;
             }
+
+            using var db = new BookStoreContext();
+
+            var allBooks = db.Books
+                             .Include(b => b.Author)
+                             .Include(b => b.Genre)
+                             .ToList();
+
+            var stockBalances = db.StockBalances
+                                  .Where(sb => sb.StoreId == SelectedStore.Id)
+                                  .ToList();
+
+            var booksWithStock = allBooks.Select(book =>
+            {
+                var stockBalance = stockBalances.FirstOrDefault(sb => sb.Isbn13 == book.Isbn13);
+                return new StockBalance
+                {
+                    StoreId = SelectedStore.Id,
+                    Isbn13 = book.Isbn13,
+                    Amount = stockBalance?.Amount ?? 0,
+                    Isbn13Navigation = book
+                };
+            }).ToList();
+
+            AllBooks = new ObservableCollection<StockBalance>(booksWithStock);
+            BooksInStock = new ObservableCollection<StockBalance>(booksWithStock.Where(b => b.Amount > 0));
+            BooksOutOfStock = new ObservableCollection<StockBalance>(booksWithStock.Where(b => b.Amount == 0));
+
+            RaisePropertyChanged(nameof(AllBooks));
+            RaisePropertyChanged(nameof(BooksInStock));
+            RaisePropertyChanged(nameof(BooksOutOfStock));
         }
 
         private void OpenIncreaseStockDialog(object parameter)
