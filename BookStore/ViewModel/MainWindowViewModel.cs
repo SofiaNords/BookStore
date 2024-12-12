@@ -45,15 +45,11 @@ namespace BookStore.ViewModel
 
         private void LoadStores()
         {
-            using (var _bookStoreContext = new BookStoreContext())
-            {
-                var stores = _bookStoreContext.Stores.ToList();
+            using var db = new BookStoreContext();
 
-                foreach (var store in stores)
-                {
-                    Stores.Add(store);
-                }
-            }
+            Stores = new ObservableCollection<Store>(
+                db.Stores.ToList()
+            );
         }
 
         private void LoadBooks()
