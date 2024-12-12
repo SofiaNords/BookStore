@@ -42,15 +42,6 @@
                 <Button Width="150"
                         Height="30"
                         Margin="10,10,10,10"
-                        Content="Increase stock"
-                        Command="{Binding OpenIncreaseDialogCommand}"/>
-                <Button Width="150"
-                        Height="30"
-                        Margin="10,10,10,10"
-                        Content="Reduce stock"/>
-                <Button Width="150"
-                        Height="30"
-                        Margin="10,10,10,10"
                         Content="Add new books"/>
             </StackPanel>
             
@@ -130,6 +121,7 @@
                 <DataGridTextColumn Header="ISBN13" Binding="{Binding Isbn13Navigation.Isbn13}"/>
                 <DataGridTextColumn Header="Author" Binding="{Binding Isbn13Navigation.Author.FullName}"/>
                 <DataGridTextColumn Header="Genre" Binding="{Binding Isbn13Navigation.Genre.Name}"/>
+                <DataGridTextColumn Header="Amount" Binding="{Binding Amount}"/>
             </DataGrid.Columns>
 
         </DataGrid>
