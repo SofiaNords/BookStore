@@ -17,6 +17,8 @@ namespace BookStore.ViewModel
 
         public ObservableCollection<StockBalance> BooksOutOfStock { get; set; }
 
+        public DelegateCommand SaveStockBalanceCommand { get; }
+
         public Store SelectedStore
         {
             get { return _selectedStore; }
@@ -33,6 +35,7 @@ namespace BookStore.ViewModel
      
         public MainWindowViewModel()
         {
+            SaveStockBalanceCommand = new DelegateCommand(o => SaveStockBalance());
             LoadStores();
         }
 
@@ -84,6 +87,43 @@ namespace BookStore.ViewModel
             RaisePropertyChanged(nameof(BooksInStock));
             RaisePropertyChanged(nameof(BooksOutOfStock));
         }
+
+        private void SaveStockBalance()
+        {
+            using var db = new BookStoreContext();
+
+            var stockBalances = db.StockBalances
+                                  .Where(sb => sb.StoreId == SelectedStore.Id)
+                                  .ToList();
+
+
+            var allBooks = new List<StockBalance>(BooksInStock.Concat(BooksOutOfStock));
+
+            foreach (var stockBalance in allBooks)
+            {
+                var dbStockBalance = stockBalances.FirstOrDefault(sb => sb.Isbn13 == stockBalance.Isbn13);
+
+                if (dbStockBalance != null)
+                {
+                    dbStockBalance.Amount = stockBalance.Amount;
+                }
+                else
+                {
+                    db.StockBalances.Add(new StockBalance
+                    {
+                        StoreId = SelectedStore.Id,
+                        Isbn13 = stockBalance.Isbn13,
+                        Amount = stockBalance.Amount
+                    });
+                }
+            }
+
+            db.SaveChanges();
+            LoadBooks();
+        }
+
+
+
 
     }
 }
