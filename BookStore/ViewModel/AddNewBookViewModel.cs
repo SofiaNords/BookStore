@@ -1,10 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using BookStore.Command;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace BookStore.ViewModel
 {
@@ -18,8 +20,14 @@ namespace BookStore.ViewModel
 
         public ObservableCollection<Publisher> AllPublishers { get; set; }
 
+        public Book NewBook { get; set; }
+
+        public DelegateCommand SaveCommand { get; set; }
+
         public AddNewBookViewModel()
         {
+            NewBook = new Book();
+            SaveCommand = new DelegateCommand(SaveNewBook);
             LoadAllBooks();
             LoadAllAuthors();
             LoadAllGenres();
@@ -64,6 +72,35 @@ namespace BookStore.ViewModel
             AllPublishers = new ObservableCollection<Publisher>(
                 db.Publishers.ToList()
                 );
+        }
+
+        public void SaveNewBook(object parameter)
+        {
+            using var db = new BookStoreContext();
+
+            var author = db.Authors
+                   .FirstOrDefault(a => a.FirstName == NewBook.Author.FirstName && a.LastName == NewBook.Author.LastName);
+            var genre = db.Genres.FirstOrDefault(g => g.Name == NewBook.Genre.Name);
+            var publisher = db.Publishers.FirstOrDefault(p => p.Name == NewBook.Publisher.Name);
+
+
+            if (author == null || genre == null || publisher == null)
+            {
+                MessageBox.Show("Plese make sure all fields are correctly filled.");
+            }
+
+            NewBook.Author = author;
+            NewBook.Genre = genre;
+            NewBook.Publisher = publisher;
+
+            db.Books.Add(NewBook);
+            db.SaveChanges();
+
+            AllBooks.Add(NewBook);
+
+            NewBook = new Book();
+
+            LoadAllBooks();
         }
     }
 }
