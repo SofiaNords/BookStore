@@ -9,6 +9,8 @@ namespace BookStore.ViewModel
     {
         private Store _selectedStore;
 
+        private string _bookFilter;
+
         public ObservableCollection<Store> Stores { get; set; }
 
         public ObservableCollection<StockBalance> AllBooks { get; set; }
@@ -32,7 +34,21 @@ namespace BookStore.ViewModel
                 }    
             }
         }
-     
+
+        public string BookFilter
+        {
+            get { return _bookFilter; }
+            set
+            {
+                if (_bookFilter != value)
+                {
+                    _bookFilter = value;
+                    RaisePropertyChanged();
+                    FilterBooks();
+                }
+            }
+        }
+
         public MainWindowViewModel()
         {
             SaveStockBalanceCommand = new DelegateCommand(o => SaveStockBalance());
@@ -80,13 +96,29 @@ namespace BookStore.ViewModel
             }).ToList();
 
             AllBooks = new ObservableCollection<StockBalance>(booksWithStock);
-            BooksInStock = new ObservableCollection<StockBalance>(booksWithStock.Where(b => b.Amount > 0));
-            BooksOutOfStock = new ObservableCollection<StockBalance>(booksWithStock.Where(b => b.Amount == 0));
 
+            FilterBooks();
             RaisePropertyChanged(nameof(AllBooks));
+        }
+
+
+        private void FilterBooks()
+        {
+            if (AllBooks == null)
+                return;
+
+            var filteredBooks = AllBooks.Where(b =>
+            string.IsNullOrEmpty(BookFilter) ||
+            b.Isbn13Navigation.Title.Contains(BookFilter, StringComparison.OrdinalIgnoreCase)
+            ).ToList();
+
+            BooksInStock = new ObservableCollection<StockBalance>(filteredBooks.Where(b => b.Amount > 0));
+            BooksOutOfStock = new ObservableCollection<StockBalance>(filteredBooks.Where(b => b.Amount == 0));
+
             RaisePropertyChanged(nameof(BooksInStock));
             RaisePropertyChanged(nameof(BooksOutOfStock));
         }
+
 
         private void SaveStockBalance()
         {
@@ -121,8 +153,6 @@ namespace BookStore.ViewModel
             db.SaveChanges();
             LoadBooks();
         }
-
-
 
 
     }
