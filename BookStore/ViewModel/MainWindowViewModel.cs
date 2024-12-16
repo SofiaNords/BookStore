@@ -109,7 +109,10 @@ namespace BookStore.ViewModel
 
             var filteredBooks = AllBooks.Where(b =>
             string.IsNullOrEmpty(BookFilter) ||
-            b.Isbn13Navigation.Title.Contains(BookFilter, StringComparison.OrdinalIgnoreCase)
+            b.Isbn13Navigation.Title.Contains(BookFilter, StringComparison.OrdinalIgnoreCase) ||
+            b.Isbn13Navigation.Author.FullName.Contains(BookFilter, StringComparison.OrdinalIgnoreCase) ||
+            b.Isbn13.ToString().Contains(BookFilter, StringComparison.OrdinalIgnoreCase) ||
+            b.Isbn13Navigation.Genre.Name.Contains(BookFilter, StringComparison.OrdinalIgnoreCase)
             ).ToList();
 
             BooksInStock = new ObservableCollection<StockBalance>(filteredBooks.Where(b => b.Amount > 0));
