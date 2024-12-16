@@ -47,7 +47,8 @@
                 <Button Width="150"
                         Height="30"
                         Margin="10,10,10,10"
-                        Content="Add new books"/>
+                        Content="Add new books"
+                        Command="{Binding OpenAddNewBookDialogCommand}"/>
             </StackPanel>
             
         </StackPanel>
