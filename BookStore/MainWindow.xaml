@@ -71,7 +71,8 @@
                            Margin="10,10,10,0"/>
                     <TextBox Width="200"
                              Height="30"
-                             Margin="10,0,10,10"/>
+                             Margin="10,0,10,10"
+                             Text="{Binding BookFilter, UpdateSourceTrigger=PropertyChanged}"/>
                 </StackPanel>
             </StackPanel>
         </StackPanel>
