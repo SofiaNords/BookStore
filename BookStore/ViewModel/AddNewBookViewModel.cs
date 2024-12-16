@@ -100,6 +100,8 @@ namespace BookStore.ViewModel
 
             NewBook = new Book();
 
+            MessageBox.Show("The book is saved!");
+
             LoadAllBooks();
         }
     }
