@@ -88,14 +88,6 @@
                            VerticalAlignment="Bottom"
                            FontSize="36"
                            Margin="10,10,10,10"/>
-                <StackPanel VerticalAlignment="Bottom"
-                            HorizontalAlignment="Left">
-                    <Label Content="Filter"
-                           Margin="10,10,10,0"/>
-                    <TextBox Width="200"
-                             Height="30"
-                             Margin="10,0,10,10"/>
-                </StackPanel>
             </StackPanel>
         </StackPanel>
 
