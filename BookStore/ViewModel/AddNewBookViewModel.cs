@@ -29,49 +29,24 @@ namespace BookStore.ViewModel
             NewBook = new Book();
             SaveCommand = new DelegateCommand(SaveNewBook);
             LoadAllBooks();
-            LoadAllAuthors();
-            LoadAllGenres();
-            LoadAllPublishers();
         }
+
 
         public void LoadAllBooks()
         {
             using var db = new BookStoreContext();
 
-            AllBooks = new ObservableCollection<Book>(
-                db.Books
-                    .Include(b => b.Author)
-                    .Include(b => b.Genre)
-                    .Include(b => b.Publisher)
-                    .ToList()
-                );
-        }
+            var books = db.Books
+                          .Include(b => b.Author)
+                          .Include(b => b.Genre)
+                          .Include(b => b.Publisher)
+                          .ToList();
 
-        public void LoadAllAuthors()
-        {
-            using var db = new BookStoreContext();
+            AllBooks = new ObservableCollection<Book>(books);
 
-            AllAuthors = new ObservableCollection<Author>(
-                db.Authors.ToList()
-                );
-        }
-
-        public void LoadAllGenres()
-        {
-            using var db = new BookStoreContext();
-
-            AllGenres = new ObservableCollection<Genre>(
-                db.Genres.ToList()
-                );
-        }
-
-        public void LoadAllPublishers()
-        {
-            using var db = new BookStoreContext();
-
-            AllPublishers = new ObservableCollection<Publisher>(
-                db.Publishers.ToList()
-                );
+            AllAuthors = new ObservableCollection<Author>(books.Select(b => b.Author).Distinct().ToList());
+            AllGenres = new ObservableCollection<Genre>(books.Select(b => b.Genre).Distinct().ToList());
+            AllPublishers = new ObservableCollection<Publisher>(books.Select(b => b.Publisher).Distinct().ToList());
         }
 
         public void SaveNewBook(object parameter)
