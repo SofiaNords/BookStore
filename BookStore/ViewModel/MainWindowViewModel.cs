@@ -3,6 +3,7 @@ using BookStore.Dialogs;
 using Microsoft.EntityFrameworkCore;
 using System.CodeDom;
 using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace BookStore.ViewModel
 {
@@ -140,9 +141,16 @@ namespace BookStore.ViewModel
             RaisePropertyChanged(nameof(BooksOutOfStock));
         }
 
-
         private void SaveStockBalance()
         {
+            var invalidBooks = BooksInStock.Concat(BooksOutOfStock).Where(sb => sb.Amount < 0).ToList();
+
+            if (invalidBooks.Any())
+            {
+                MessageBox.Show("The number of books cannot be negative.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
             using var db = new BookStoreContext();
 
             var stockBalances = db.StockBalances
