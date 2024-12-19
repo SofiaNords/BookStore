@@ -10,6 +10,8 @@ namespace BookStore.ViewModel
     {
         private Store _selectedStore;
 
+        private StockBalance _selectedBook;
+
         private string _bookFilter;
 
         public ObservableCollection<Store> Stores { get; set; }
@@ -35,6 +37,18 @@ namespace BookStore.ViewModel
                     RaisePropertyChanged();
                     LoadBooks();
                 }    
+            }
+        }
+        public StockBalance SelectedBook
+        {
+            get { return _selectedBook; }
+            set
+            {
+                if (_selectedBook != value)
+                {
+                    _selectedBook = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
