@@ -42,13 +42,13 @@
                 <Button Width="150"
                         Height="30"
                         Margin="10,10,10,10"
-                        Content="Save Stock"
-                        Command="{Binding SaveStockBalanceCommand}"/>   
+                        Content="Update Stock"
+                        Command="{Binding SaveStockBalanceCommand}"/>
                 <Button Width="150"
                         Height="30"
                         Margin="10,10,10,10"
                         Content="Add new books"
-                        Command="{Binding OpenAddNewBookDialogCommand}"/>
+                        Command="{Binding OpenAddNewBookDialogCommand}"/>  
             </StackPanel>
             
         </StackPanel>
