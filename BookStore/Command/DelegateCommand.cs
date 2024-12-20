@@ -2,7 +2,7 @@
 
 namespace BookStore.Command
 {
-    internal class DelegateCommand : ICommand
+    public class DelegateCommand : ICommand
     {
         private readonly Action<object> execute;
         private readonly Func<object?, bool> canExecute;
